@@ -280,7 +280,7 @@ class _CategoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -300,7 +300,7 @@ class _CategoryCard extends StatelessWidget {
                     height: 75,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: color.withOpacity(isDark ? 0.15 : 0.1),
+                      color: color.withValues(alpha: isDark ? 0.15 : 0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
@@ -371,7 +371,7 @@ class _CategoryCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.15),
+                    color: color.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(icon, size: 16, color: color),

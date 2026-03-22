@@ -5,7 +5,7 @@ import 'package:pro_services/models/nota.dart';
 import 'package:pro_services/models/foto_proyecto.dart';
 
 class ProyectoService {
-  static const _base = 'https://TU_API_BASE_URL'; // TODO: reemplazar con la URL real
+  static const _base = 'https://TU_API_BASE_URL';
 
   // ── Proyectos ─────────────────────────────────────────────────────────────
 

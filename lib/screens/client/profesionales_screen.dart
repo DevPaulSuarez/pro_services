@@ -208,7 +208,7 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                         itemCount: profesionales.length,
-                        separatorBuilder: (_, __) =>
+                        separatorBuilder: (_, _) =>
                             const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           return _ProfesionalCard(
@@ -246,7 +246,7 @@ class _ProfesionalCard extends StatelessWidget {
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
     final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
     final btnColor = isDark ? const Color(0xFFbcbcbc) : const Color(0xFF111827);
-    final chipBg = catColor.withOpacity(isDark ? 0.18 : 0.1);
+    final chipBg = catColor.withValues(alpha: isDark ? 0.18 : 0.1);
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -255,7 +255,7 @@ class _ProfesionalCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -270,7 +270,7 @@ class _ProfesionalCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 26,
-                backgroundColor: catColor.withOpacity(0.15),
+                backgroundColor: catColor.withValues(alpha: 0.15),
                 child: Text(
                   profesional.nombre[0],
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: catColor),

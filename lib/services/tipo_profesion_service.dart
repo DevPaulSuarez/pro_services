@@ -1,6 +1,5 @@
 import 'package:pro_services/models/tipo_profesion.dart';
 
-// TODO: reemplazar con llamada real a la API
 class TipoProfesionService {
   static Future<List<TipoProfesion>> getTipos() async {
     // Simula latencia de red

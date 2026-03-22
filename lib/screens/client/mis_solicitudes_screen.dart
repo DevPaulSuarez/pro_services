@@ -213,7 +213,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                 : ListView.separated(
                     padding: const EdgeInsets.all(16),
                     itemCount: lista.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
                     itemBuilder: (context, i) {
                       final s = lista[i];
                       final color = _estadoColor(s.estado);
@@ -225,7 +225,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black
-                                  .withOpacity(isDark ? 0.3 : 0.06),
+                                  .withValues(alpha: isDark ? 0.3 : 0.06),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
@@ -239,7 +239,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 22,
-                                  backgroundColor: color.withOpacity(0.15),
+                                  backgroundColor: color.withValues(alpha: 0.15),
                                   child: Text(s.profesional[0],
                                       style: TextStyle(
                                           fontSize: 18,
@@ -270,7 +270,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: color.withOpacity(0.12),
+                                    color: color.withValues(alpha: 0.12),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Row(
@@ -332,7 +332,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                                     horizontal: 12, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF22C55E)
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Row(
@@ -357,7 +357,7 @@ class _MisSolicitudesScreenState extends State<MisSolicitudesScreen> {
                                     horizontal: 12, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFEF4444)
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Row(

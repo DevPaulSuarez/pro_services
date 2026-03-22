@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  static const _base = 'https://TU_API_BASE_URL'; // TODO: reemplazar con la URL real
+  static const _base = 'https://TU_API_BASE_URL';
 
   /// Iniciar sesión. Retorna el token JWT.
   static Future<String> login(String correo, String contrasena) async {

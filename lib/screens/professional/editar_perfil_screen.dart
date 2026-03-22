@@ -120,7 +120,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundColor: const Color(0xFF6366F1).withOpacity(0.15),
+                      backgroundColor: const Color(0xFF6366F1).withValues(alpha: 0.15),
                       child: const Text('A',
                           style: TextStyle(
                               fontSize: 40,
@@ -284,10 +284,10 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xFF6366F1))),
                                 backgroundColor:
-                                    const Color(0xFF6366F1).withOpacity(0.1),
+                                    const Color(0xFF6366F1).withValues(alpha: 0.1),
                                 side: BorderSide(
                                     color: const Color(0xFF6366F1)
-                                        .withOpacity(0.3)),
+                                        .withValues(alpha: 0.3)),
                                 deleteIcon: const Icon(Icons.close_rounded,
                                     size: 14, color: Color(0xFF6366F1)),
                                 onDeleted: () =>
@@ -391,7 +391,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),

@@ -349,7 +349,7 @@ class _ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -363,7 +363,7 @@ class _ProfileCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: _accent.withOpacity(0.15),
+                backgroundColor: _accent.withValues(alpha: 0.15),
                 child: Text(
                   nombre[0],
                   style: const TextStyle(
@@ -420,7 +420,7 @@ class _ProfileCard extends StatelessWidget {
               Switch(
                 value: disponible,
                 onChanged: onToggle,
-                activeColor: const Color(0xFF22C55E),
+                activeThumbColor: const Color(0xFF22C55E),
               ),
             ],
           ),
@@ -452,7 +452,7 @@ class _ProfileCard extends StatelessWidget {
               value: 0.75,
               minHeight: 7,
               backgroundColor:
-                  _accent.withOpacity(isDark ? 0.15 : 0.1),
+                  _accent.withValues(alpha: isDark ? 0.15 : 0.1),
               valueColor:
                   const AlwaysStoppedAnimation<Color>(_accent),
             ),
@@ -599,7 +599,7 @@ class _MesStatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -612,7 +612,7 @@ class _MesStatCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: stat.iconColor.withOpacity(0.12),
+              color: stat.iconColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(stat.icon, size: 20, color: stat.iconColor),
@@ -666,7 +666,7 @@ class _HabilidadesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chipBg = _accent.withOpacity(isDark ? 0.18 : 0.1);
+    final chipBg = _accent.withValues(alpha: isDark ? 0.18 : 0.1);
 
     return Container(
       width: double.infinity,
@@ -676,7 +676,7 @@ class _HabilidadesSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -772,7 +772,7 @@ class _TabBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -884,7 +884,7 @@ class _ProyectosTabState extends State<_ProyectosTab> {
                     decoration: BoxDecoration(
                       color: active
                           ? color
-                          : color.withOpacity(widget.isDark ? 0.15 : 0.1),
+                          : color.withValues(alpha: widget.isDark ? 0.15 : 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -977,7 +977,7 @@ class _ProyectoDetalleCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -991,7 +991,7 @@ class _ProyectoDetalleCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: _color.withOpacity(0.15),
+                backgroundColor: _color.withValues(alpha: 0.15),
                 child: Text(solicitud.cliente[0],
                     style: TextStyle(
                         fontSize: 16,
@@ -1021,7 +1021,7 @@ class _ProyectoDetalleCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _color.withOpacity(0.12),
+                  color: _color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(_label,
@@ -1096,7 +1096,7 @@ class _ProyectoDetalleCard extends StatelessWidget {
                 value: solicitud.progreso,
                 minHeight: 7,
                 backgroundColor: const Color(0xFF6366F1)
-                    .withOpacity(isDark ? 0.15 : 0.1),
+                    .withValues(alpha: isDark ? 0.15 : 0.1),
                 valueColor: const AlwaysStoppedAnimation<Color>(
                     Color(0xFF6366F1)),
               ),
@@ -1181,7 +1181,7 @@ class _ResenasTab extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+                color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
                 blurRadius: 8,
                 offset: const Offset(0, 3),
               ),
@@ -1195,7 +1195,7 @@ class _ResenasTab extends StatelessWidget {
                   CircleAvatar(
                     radius: 18,
                     backgroundColor:
-                        const Color(0xFF6366F1).withOpacity(0.15),
+                        const Color(0xFF6366F1).withValues(alpha: 0.15),
                     child: Text(r.nombre[0],
                         style: const TextStyle(
                             fontSize: 14,
@@ -1333,7 +1333,7 @@ class _StatCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -1344,7 +1344,7 @@ class _StatCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.12),
+                color: iconColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, size: 18, color: iconColor),
@@ -1426,7 +1426,7 @@ class _SolicitudCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -1440,7 +1440,7 @@ class _SolicitudCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: _estadoColor.withOpacity(0.15),
+                backgroundColor: _estadoColor.withValues(alpha: 0.15),
                 child: Text(
                   solicitud.cliente[0],
                   style: TextStyle(
@@ -1472,7 +1472,7 @@ class _SolicitudCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _estadoColor.withOpacity(0.12),
+                  color: _estadoColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -1554,7 +1554,7 @@ class _SolicitudCard extends StatelessWidget {
                 value: solicitud.progreso,
                 minHeight: 7,
                 backgroundColor:
-                    const Color(0xFF6366F1).withOpacity(isDark ? 0.15 : 0.1),
+                    const Color(0xFF6366F1).withValues(alpha: isDark ? 0.15 : 0.1),
                 valueColor: const AlwaysStoppedAnimation<Color>(
                     Color(0xFF6366F1)),
               ),

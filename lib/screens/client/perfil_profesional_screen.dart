@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pro_services/main.dart';
 import 'package:pro_services/models/profesional.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PerfilProfesionalScreen extends StatelessWidget {
   final Profesional profesional;
@@ -20,7 +21,7 @@ class PerfilProfesionalScreen extends StatelessWidget {
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
     final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
     final btnColor = isDark ? const Color(0xFF64748B) : const Color(0xFF111827);
-    final chipBg = catColor.withOpacity(isDark ? 0.18 : 0.1);
+    final chipBg = catColor.withValues(alpha: isDark ? 0.18 : 0.1);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -64,7 +65,7 @@ class PerfilProfesionalScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -74,7 +75,7 @@ class PerfilProfesionalScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: catColor.withOpacity(0.15),
+                    backgroundColor: catColor.withValues(alpha: 0.15),
                     child: Text(
                       profesional.nombre[0],
                       style: TextStyle(
@@ -108,8 +109,8 @@ class PerfilProfesionalScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                     decoration: BoxDecoration(
                       color: profesional.disponibleAhora
-                          ? const Color(0xFF10B981).withOpacity(0.12)
-                          : Colors.grey.withOpacity(0.12),
+                          ? const Color(0xFF10B981).withValues(alpha: 0.12)
+                          : Colors.grey.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -241,13 +242,15 @@ class PerfilProfesionalScreen extends StatelessWidget {
                             style: TextStyle(fontSize: 13, color: textSecondary)),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          // TODO: launch url_launcher con maps
+                        onTap: () async {
+                          final query = Uri.encodeComponent(profesional.ubicacion);
+                          final uri = Uri.parse('https://maps.google.com/?q=$query');
+                          if (await canLaunchUrl(uri)) launchUrl(uri);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
-                            color: catColor.withOpacity(0.12),
+                            color: catColor.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -384,9 +387,9 @@ class PerfilProfesionalScreen extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: catColor.withOpacity(isDark ? 0.15 : 0.08),
+                color: catColor.withValues(alpha: isDark ? 0.15 : 0.08),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: catColor.withOpacity(0.25)),
+                border: Border.all(color: catColor.withValues(alpha: 0.25)),
               ),
               child: Column(
                 children: [
@@ -505,7 +508,7 @@ class _Section extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -579,7 +582,7 @@ class _ResenaItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 16,
-              backgroundColor: catColor.withOpacity(0.15),
+              backgroundColor: catColor.withValues(alpha: 0.15),
               child: Text(
                 autor[0],
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: catColor),

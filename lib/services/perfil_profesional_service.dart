@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:pro_services/models/profesional.dart';
 
 class PerfilProfesionalService {
-  static const _base = 'https://TU_API_BASE_URL'; // TODO: reemplazar con la URL real
+  static const _base = 'https://TU_API_BASE_URL';
 
   /// Obtener perfil del profesional autenticado.
   static Future<Profesional> getMe(String token) async {

@@ -162,7 +162,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.3 : 0.07),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -175,7 +175,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                     children: [
                       CircleAvatar(
                         radius: 26,
-                        backgroundColor: _estadoColor.withOpacity(0.15),
+                        backgroundColor: _estadoColor.withValues(alpha: 0.15),
                         child: Text(
                           widget.cliente[0],
                           style: TextStyle(
@@ -232,7 +232,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 5),
                         decoration: BoxDecoration(
-                          color: _estadoColor.withOpacity(0.12),
+                          color: _estadoColor.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -301,7 +301,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                         value: widget.progreso,
                         minHeight: 8,
                         backgroundColor: const Color(0xFF6366F1)
-                            .withOpacity(isDark ? 0.15 : 0.1),
+                            .withValues(alpha: isDark ? 0.15 : 0.1),
                         valueColor: const AlwaysStoppedAnimation<Color>(
                             Color(0xFF6366F1)),
                       ),
@@ -474,7 +474,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
@@ -498,7 +498,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF6366F1).withOpacity(0.1),
+                              color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(
@@ -567,7 +567,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
@@ -608,7 +608,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                       child: LinearProgressIndicator(
                         value: _fotoProgreso,
                         minHeight: 8,
-                        backgroundColor: Colors.grey.withOpacity(0.15),
+                        backgroundColor: Colors.grey.withValues(alpha: 0.15),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           _completado
                               ? const Color(0xFF22C55E)
@@ -636,11 +636,11 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                                 height: 56,
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF6366F1)
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                       color: const Color(0xFF6366F1)
-                                          .withOpacity(0.3)),
+                                          .withValues(alpha: 0.3)),
                                 ),
                                 child: const Icon(
                                     Icons.image_rounded,
@@ -674,7 +674,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF22C55E).withOpacity(0.1),
+                        color: const Color(0xFF22C55E).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
@@ -815,7 +815,7 @@ class _Section extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -861,7 +861,7 @@ class _InfoRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
+            color: iconColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, size: 15, color: iconColor),
@@ -922,7 +922,7 @@ class _ActividadItem extends StatelessWidget {
               Container(
                 width: 2,
                 height: 24,
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
               ),
             ],
           ),
@@ -969,9 +969,9 @@ class _ContactBtn extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 9),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: color.withOpacity(0.25)),
+          border: Border.all(color: color.withValues(alpha: 0.25)),
         ),
         child: Column(
           children: [
