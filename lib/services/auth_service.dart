@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 class AuthService {
   static const _base = 'https://TU_API_BASE_URL';
 
-  /// Iniciar sesión. Retorna el token JWT.
-  static Future<String> login(String correo, String contrasena) async {
+  /// Iniciar sesión. Retorna el token JWT y el rol del usuario.
+  static Future<({String token, String rol})> login(String correo, String contrasena) async {
     final res = await http.post(
       Uri.parse('$_base/auth/login'),
       headers: {'Content-Type': 'application/json'},
@@ -13,7 +13,7 @@ class AuthService {
     );
     _checkStatus(res);
     final data = jsonDecode(res.body) as Map<String, dynamic>;
-    return data['token'] as String;
+    return (token: data['token'] as String, rol: data['rol'] as String);
   }
 
   /// Registrar usuario nuevo.

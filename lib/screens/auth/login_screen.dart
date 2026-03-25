@@ -3,6 +3,7 @@ import 'package:pro_services/main.dart';
 import 'package:pro_services/screens/auth/register_screen.dart';
 import 'package:pro_services/screens/client/home_client_screen.dart';
 import 'package:pro_services/screens/professional/home_professional_screen.dart';
+import 'package:pro_services/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,14 +24,26 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _onLogin() {
-    final destination = _selectedRole == 0
-        ? const HomeClientScreen()
-        : const HomeProfessionalScreen();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => destination),
-    );
+  Future<void> _onLogin() async {
+    try {
+      final result = await AuthService.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+      final destination = result.rol == 'cliente'
+          ? const HomeClientScreen()
+          : const HomeProfessionalScreen();
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => destination),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al iniciar sesión: $e')),
+      );
+    }
   }
 
   @override
