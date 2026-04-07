@@ -73,9 +73,7 @@ class _HistorialPagosScreenState extends State<HistorialPagosScreen> {
                   Icon(
                     Icons.receipt_long_rounded,
                     size: 64,
-                    color: isDark
-                        ? Colors.grey.shade600
-                        : Colors.grey.shade400,
+                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -92,38 +90,36 @@ class _HistorialPagosScreenState extends State<HistorialPagosScreen> {
             );
           }
 
-          final totalPagado =
-              pagos.fold<double>(0, (acc, p) => acc + p.monto);
+          final totalPagado = pagos.fold<double>(0, (acc, p) => acc + p.monto);
 
           return Column(
             children: [
               // Total card
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 16),
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: isDark
-                          ? [
-                              const Color(0xFF052E16),
-                              const Color(0xFF064E3B),
-                            ]
-                          : [
-                              const Color(0xFF16A34A),
-                              const Color(0xFF15803D),
-                            ],
+                          ? [const Color(0xFF052E16), const Color(0xFF064E3B)]
+                          : [const Color(0xFF16A34A), const Color(0xFF15803D)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Colors.green.withValues(alpha: isDark ? 0.15 : 0.25),
+                        color: Colors.green.withValues(
+                          alpha: isDark ? 0.15 : 0.25,
+                        ),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -196,7 +192,7 @@ class _HistorialPagosScreenState extends State<HistorialPagosScreen> {
                 child: ListView.separated(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                   itemCount: pagos.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     return _PagoCard(
                       pago: pagos[index],
@@ -286,11 +282,7 @@ class _PagoCard extends StatelessWidget {
                 color: estadoColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(
-                Icons.payment_rounded,
-                color: estadoColor,
-                size: 22,
-              ),
+              child: Icon(Icons.payment_rounded, color: estadoColor, size: 22),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -300,7 +292,9 @@ class _PagoCard extends StatelessWidget {
                   // Estado badge
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 2),
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: estadoColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(6),
@@ -338,10 +332,7 @@ class _PagoCard extends StatelessWidget {
                   ),
                   if (pago.metodoPago?.isNotEmpty == true) ...[
                     const SizedBox(height: 4),
-                    _MetodoPagoChip(
-                      metodo: pago.metodoPago!,
-                      isDark: isDark,
-                    ),
+                    _MetodoPagoChip(metodo: pago.metodoPago!, isDark: isDark),
                   ],
                 ],
               ),
@@ -362,9 +353,7 @@ class _PagoCard extends StatelessWidget {
                   '#${pago.id}',
                   style: TextStyle(
                     fontSize: 11,
-                    color: isDark
-                        ? Colors.grey.shade500
-                        : Colors.grey.shade400,
+                    color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
                   ),
                 ),
               ],
@@ -387,9 +376,7 @@ class _MetodoPagoChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFF334155)
-            : const Color(0xFFF1F5F9),
+        color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(

@@ -149,7 +149,7 @@ class _SolicitudesEntrantesScreenState
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: proyectos.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
             itemBuilder: (context, i) {
               final proyecto = proyectos[i];
               return _SolicitudCard(

@@ -34,9 +34,9 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
       _reload();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -48,9 +48,9 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
       _reload();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -115,11 +115,11 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.notifications_none_rounded,
-                      size: 56,
-                      color: isDark
-                          ? Colors.grey.shade600
-                          : Colors.grey.shade400),
+                  Icon(
+                    Icons.notifications_none_rounded,
+                    size: 56,
+                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     'No tenés notificaciones',
@@ -137,7 +137,7 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
           return ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final n = items[index];
               return _NotificacionCard(
@@ -172,7 +172,9 @@ class _NotificacionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
+    final accentColor = isDark
+        ? const Color(0xFF3B82F6)
+        : const Color(0xFF2563EB);
     final unreadBorder = !notificacion.esLeida
         ? Border.all(color: accentColor.withValues(alpha: 0.5), width: 1)
         : null;
@@ -180,81 +182,82 @@ class _NotificacionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-      decoration: BoxDecoration(
-        color: notificacion.esLeida
-            ? cardColor
-            : (isDark
-                ? const Color(0xFF1E3A5F)
-                : const Color(0xFFEFF6FF)),
-        borderRadius: BorderRadius.circular(12),
-        border: unreadBorder,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.06),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        leading: CircleAvatar(
-          backgroundColor: accentColor.withValues(alpha: 0.15),
-          child: Icon(
-            Icons.notifications_rounded,
-            color: accentColor,
-            size: 20,
-          ),
-        ),
-        title: Text(
-          notificacion.titulo,
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
-            color: isDark ? Colors.white : const Color(0xFF0F172A),
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 2),
-            Text(
-              notificacion.mensaje,
-              style: TextStyle(
-                fontSize: 12,
-                color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
-              ),
+        decoration: BoxDecoration(
+          color: notificacion.esLeida
+              ? cardColor
+              : (isDark ? const Color(0xFF1E3A5F) : const Color(0xFFEFF6FF)),
+          borderRadius: BorderRadius.circular(12),
+          border: unreadBorder,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              notificacion.fecha,
-              style: TextStyle(
-                fontSize: 11,
-                color: isDark ? Colors.grey.shade500 : Colors.grey.shade500,
-              ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 6,
+          ),
+          leading: CircleAvatar(
+            backgroundColor: accentColor.withValues(alpha: 0.15),
+            child: Icon(
+              Icons.notifications_rounded,
+              color: accentColor,
+              size: 20,
             ),
-            const SizedBox(height: 4),
-            GestureDetector(
-              onTap: onMarcar,
-              child: Icon(
-                notificacion.esLeida
-                    ? Icons.check_circle_rounded
-                    : Icons.radio_button_unchecked_rounded,
-                size: 20,
-                color: notificacion.esLeida
-                    ? Colors.green.shade400
-                    : (isDark ? Colors.grey.shade500 : Colors.grey.shade400),
-              ),
+          ),
+          title: Text(
+            notificacion.titulo,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
             ),
-          ],
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 2),
+              Text(
+                notificacion.mensaje,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                notificacion.fecha,
+                style: TextStyle(
+                  fontSize: 11,
+                  color: isDark ? Colors.grey.shade500 : Colors.grey.shade500,
+                ),
+              ),
+              const SizedBox(height: 4),
+              GestureDetector(
+                onTap: onMarcar,
+                child: Icon(
+                  notificacion.esLeida
+                      ? Icons.check_circle_rounded
+                      : Icons.radio_button_unchecked_rounded,
+                  size: 20,
+                  color: notificacion.esLeida
+                      ? Colors.green.shade400
+                      : (isDark ? Colors.grey.shade500 : Colors.grey.shade400),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }

@@ -165,7 +165,7 @@ class _BusquedaScreenState extends State<BusquedaScreen> {
                     children: [
                       Switch(
                         value: tmpSoloDisp,
-                        activeColor: const Color(0xFF6366F1),
+                        activeThumbColor: const Color(0xFF6366F1),
                         onChanged: (v) =>
                             setSheetState(() => tmpSoloDisp = v),
                       ),
@@ -471,7 +471,7 @@ class _BusquedaScreenState extends State<BusquedaScreen> {
                       return ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                         itemCount: resultados.length,
-                        separatorBuilder: (_, __) =>
+                        separatorBuilder: (_, _) =>
                             const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           return _ResultadoCard(

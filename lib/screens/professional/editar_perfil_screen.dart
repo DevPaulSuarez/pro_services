@@ -270,7 +270,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                     ),
                     const SizedBox(height: 14),
                     DropdownButtonFormField<String>(
-                      value: _tiposProfesion.any((t) => t.nombre == _especialidadSeleccionada)
+                      initialValue: _tiposProfesion.any((t) => t.nombre == _especialidadSeleccionada)
                           ? _especialidadSeleccionada
                           : null,
                       style: TextStyle(fontSize: 13, color: textPrimary),

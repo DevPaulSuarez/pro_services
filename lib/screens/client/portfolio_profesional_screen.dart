@@ -32,8 +32,10 @@ class _PortfolioProfesionalScreenState
 
   void _reload() {
     setState(() {
-      _futuro =
-          PortfolioService.getPortfolio(widget.token, widget.idProfesional);
+      _futuro = PortfolioService.getPortfolio(
+        widget.token,
+        widget.idProfesional,
+      );
     });
   }
 
@@ -51,12 +53,15 @@ class _PortfolioProfesionalScreenState
               child: Image.network(
                 url,
                 fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   height: 240,
                   color: const Color(0xFF1E293B),
                   child: const Center(
-                    child: Icon(Icons.broken_image_rounded,
-                        size: 48, color: Colors.grey),
+                    child: Icon(
+                      Icons.broken_image_rounded,
+                      size: 48,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),
@@ -71,8 +76,11 @@ class _PortfolioProfesionalScreenState
                     color: Colors.black54,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.close_rounded,
-                      color: Colors.white, size: 20),
+                  child: const Icon(
+                    Icons.close_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               ),
             ),
@@ -85,8 +93,7 @@ class _PortfolioProfesionalScreenState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor =
-        isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
+    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
     final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
 
     return Scaffold(
@@ -103,9 +110,7 @@ class _PortfolioProfesionalScreenState
           IconButton(
             icon: Icon(
               isDark ? Icons.wb_sunny_rounded : Icons.nightlight_round,
-              color: isDark
-                  ? const Color(0xFFFBBF24)
-                  : const Color(0xFF6366F1),
+              color: isDark ? const Color(0xFFFBBF24) : const Color(0xFF6366F1),
             ),
             onPressed: () => MyApp.of(context).toggleTheme(),
           ),
@@ -135,8 +140,7 @@ class _PortfolioProfesionalScreenState
                   Icon(
                     Icons.photo_library_outlined,
                     size: 64,
-                    color:
-                        isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -166,8 +170,7 @@ class _PortfolioProfesionalScreenState
           }
 
           return ListView.builder(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             itemCount: items.length,
             itemBuilder: (context, index) => _ProyectoCard(
               item: items[index],
@@ -233,8 +236,7 @@ class _ProyectoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSecondary =
-        isDark ? Colors.grey.shade400 : Colors.grey.shade600;
+    final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -285,15 +287,15 @@ class _ProyectoCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Row(
                       children: [
-                        Icon(Icons.calendar_today_rounded,
-                            size: 12, color: textSecondary),
+                        Icon(
+                          Icons.calendar_today_rounded,
+                          size: 12,
+                          color: textSecondary,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           item.fechaCompletado,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: textSecondary,
-                          ),
+                          style: TextStyle(fontSize: 12, color: textSecondary),
                         ),
                       ],
                     ),
@@ -324,7 +326,7 @@ class _ProyectoCard extends StatelessWidget {
                     child: Image.network(
                       url,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
+                      errorBuilder: (_, _, _) => Container(
                         color: isDark
                             ? const Color(0xFF334155)
                             : const Color(0xFFE2E8F0),

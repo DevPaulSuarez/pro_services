@@ -42,7 +42,7 @@ class PlantillaService {
         'manoObra': manoObra,
         'materiales': materiales,
         'traslado': traslado,
-        if (observaciones != null) 'observaciones': observaciones,
+        'observaciones': ?observaciones,
       }),
     );
     _checkStatus(res);
@@ -67,7 +67,7 @@ class PlantillaService {
         'manoObra': manoObra,
         'materiales': materiales,
         'traslado': traslado,
-        if (observaciones != null) 'observaciones': observaciones,
+        'observaciones': ?observaciones,
       }),
     );
     _checkStatus(res);

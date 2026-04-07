@@ -401,39 +401,3 @@ Widget _valueCell(
   );
 }
 
-// _ErrorView is included even though this screen is static
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.onRetry});
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.wifi_off_rounded,
-            size: 56,
-            color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Error al cargar los datos',
-            style: TextStyle(
-              fontSize: 16,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh_rounded),
-            label: const Text('Reintentar'),
-          ),
-        ],
-      ),
-    );
-  }
-}

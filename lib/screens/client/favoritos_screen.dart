@@ -35,9 +35,9 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
       _reload();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -86,9 +86,7 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
                   Icon(
                     Icons.favorite_border_rounded,
                     size: 64,
-                    color: isDark
-                        ? Colors.grey.shade600
-                        : Colors.grey.shade400,
+                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -146,9 +144,11 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
               Expanded(
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   itemCount: idsList.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     final id = idsList[index];
                     return _FavoritoCard(
@@ -257,10 +257,7 @@ class _FavoritoCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Quitar',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.red.shade400,
-                  ),
+                  style: TextStyle(fontSize: 10, color: Colors.red.shade400),
                 ),
               ],
             ),

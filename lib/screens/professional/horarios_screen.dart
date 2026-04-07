@@ -82,7 +82,7 @@ class _HorariosScreenState extends State<HorariosScreen> {
 
                   // Día semana
                   DropdownButtonFormField<int>(
-                    value: diaSeleccionado,
+                    initialValue: diaSeleccionado,
                     style: TextStyle(fontSize: 13, color: textPrimary),
                     dropdownColor:
                         isDark ? const Color(0xFF1E293B) : Colors.white,
@@ -345,7 +345,7 @@ class _HorariosScreenState extends State<HorariosScreen> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: 7,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (context, i) {
               final dia = i + 1;
               final nombres = const [

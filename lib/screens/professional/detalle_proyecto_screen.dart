@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:pro_services/main.dart';
 import 'package:pro_services/screens/client/chat_proyecto_screen.dart';
-import 'package:pro_services/screens/professional/crear_resena_cliente_screen.dart';
 import 'package:pro_services/screens/professional/fotos_proyecto_screen.dart';
 import 'package:pro_services/screens/professional/marcar_hito_screen.dart';
 import 'package:pro_services/screens/professional/perfil_cliente_screen.dart';
@@ -53,12 +50,9 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
   final List<String> _notas = [];
   final List<String> _fotos = []; // mock: cada elemento = una foto subida
   bool _completado = false;
-  late double _progreso;
-
   @override
   void initState() {
     super.initState();
-    _progreso = widget.progreso;
   }
 
   Color get _estadoColor {
@@ -126,34 +120,6 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
         ],
       ),
     );
-  }
-
-  Future<void> _guardarProgreso() async {
-    try {
-      const base = 'http://localhost:5099';
-      final res = await http.patch(
-        Uri.parse('$base/proyectos/${widget.id}/progreso'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${widget.token}',
-        },
-        body: jsonEncode({'progreso': _progreso}),
-      );
-      if (res.statusCode >= 200 && res.statusCode < 300) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content:
-                  Text('Progreso actualizado: ${(_progreso * 100).toInt()}%')),
-        );
-      } else {
-        throw Exception('Error ${res.statusCode}');
-      }
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error: $e')));
-    }
   }
 
   @override
@@ -849,6 +815,8 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         onPressed: () async {
+                          final messenger = ScaffoldMessenger.of(context);
+                          final nav = Navigator.of(context);
                           final confirmar = await showDialog<bool>(
                             context: context,
                             builder: (ctx) => AlertDialog(
@@ -875,14 +843,14 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                             await ProyectoService.aceptar(
                                 widget.token, widget.id);
                             if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            messenger.showSnackBar(
                               const SnackBar(
                                   content: Text('Proyecto aceptado')),
                             );
-                            Navigator.pop(context, true);
+                            nav.pop(true);
                           } catch (e) {
                             if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            messenger.showSnackBar(
                               SnackBar(content: Text('Error: $e')),
                             );
                           }
@@ -909,6 +877,8 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                         borderRadius: BorderRadius.circular(10)),
                   ),
                   onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final nav = Navigator.of(context);
                     final confirmar = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
@@ -933,14 +903,14 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                       await ProyectoService.completar(
                           widget.token, widget.id);
                       if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      messenger.showSnackBar(
                         const SnackBar(
                             content: Text('Proyecto completado')),
                       );
-                      Navigator.pop(context, true);
+                      nav.pop(true);
                     } catch (e) {
                       if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      messenger.showSnackBar(
                         SnackBar(content: Text('Error: $e')),
                       );
                     }

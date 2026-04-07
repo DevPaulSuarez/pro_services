@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:pro_services/main.dart';
@@ -590,6 +589,8 @@ class _DetalleSolicitudScreenState extends State<DetalleSolicitudScreen> {
                     icon: const Icon(Icons.refresh_rounded),
                     label: const Text('Re-contratar'),
                     onPressed: () async {
+                      final messenger = ScaffoldMessenger.of(context);
+                      final nav = Navigator.of(context);
                       final confirmar = await showDialog<bool>(
                         context: context,
                         builder: (ctx) => AlertDialog(
@@ -613,15 +614,15 @@ class _DetalleSolicitudScreenState extends State<DetalleSolicitudScreen> {
                         await ProyectoService.reContratar(
                             widget.token, s.id);
                         if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        messenger.showSnackBar(
                           const SnackBar(
                               content:
                                   Text('Re-contratación creada exitosamente')),
                         );
-                        Navigator.pop(context, true);
+                        nav.pop(true);
                       } catch (e) {
                         if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        messenger.showSnackBar(
                           SnackBar(content: Text('Error: $e')),
                         );
                       }
@@ -777,7 +778,7 @@ class _FotosTrabajoSection extends StatelessWidget {
                           fit: BoxFit.cover,
                           width: 80,
                           height: 80,
-                          errorBuilder: (_, __, ___) => Container(
+                          errorBuilder: (_, _, _) => Container(
                             width: 80,
                             height: 80,
                             color: isDark

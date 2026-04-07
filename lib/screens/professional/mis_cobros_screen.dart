@@ -116,7 +116,7 @@ class _MisCobrosScreenState extends State<MisCobrosScreen> {
                 child: ListView.separated(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   itemCount: cobros.length,
-                  separatorBuilder: (_, __) =>
+                  separatorBuilder: (_, _) =>
                       const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     final p = cobros[index];

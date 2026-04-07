@@ -367,7 +367,7 @@ class _TimelineHitos extends StatelessWidget {
                       if (isDone) ...[
                         const SizedBox(height: 3),
                         Text(
-                          hitoDone!.fechaHito,
+                          hitoDone.fechaHito,
                           style: TextStyle(
                               fontSize: 11, color: accentColor),
                         ),

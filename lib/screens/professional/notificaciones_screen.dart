@@ -123,7 +123,7 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final n = items[index];
               final highlightColor = isDark
@@ -138,7 +138,7 @@ class _NotificacionesScreenState extends State<NotificacionesScreen> {
                     border: Border.all(
                       color: n.esLeida
                           ? Colors.transparent
-                          : Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                          : Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                     ),
                   ),
                   child: ListTile(

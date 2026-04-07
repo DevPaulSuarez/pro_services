@@ -21,9 +21,9 @@ class SolicitudAbiertaService {
       'descripcion': descripcion,
       'idTipoProfesion': tipoProfesionId,
       'esUrgente': esUrgente,
-      if (presupuestoMax != null) 'presupuestoMax': presupuestoMax,
+      'presupuestoMax': ?presupuestoMax,
       if (ubicacion != null && ubicacion.isNotEmpty) 'ubicacion': ubicacion,
-      if (fechaLimite != null) 'fechaLimite': fechaLimite,
+      'fechaLimite': ?fechaLimite,
     };
     final res = await http.post(
       Uri.parse('$_base/solicitudes-abiertas'),

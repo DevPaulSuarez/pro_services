@@ -341,7 +341,6 @@ class _HitoButton extends StatelessWidget {
         ? accentColor.withValues(alpha: 0.1)
         : greyColor.withValues(alpha: 0.3);
     final borderColor = isDone ? accentColor : greyColor;
-    final iconColor   = isDone ? accentColor : textSecondary;
     final labelColor  = isDone ? accentColor : textSecondary;
 
     return GestureDetector(

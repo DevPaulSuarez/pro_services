@@ -30,7 +30,7 @@ class ResenaClienteService {
         'idUsuario': idUsuario,
         'idProyecto': idProyecto,
         'puntaje': puntaje,
-        if (comentario != null) 'comentario': comentario,
+        'comentario': ?comentario,
       }),
     );
     _checkStatus(res);

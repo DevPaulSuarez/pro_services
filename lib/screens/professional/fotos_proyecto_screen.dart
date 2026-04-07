@@ -430,7 +430,7 @@ class _FotoCard extends StatelessWidget {
           Image.network(
             foto.url,
             fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
+            errorBuilder: (_, _, _) => Container(
               color: isDark
                   ? const Color(0xFF334155)
                   : const Color(0xFFE2E8F0),

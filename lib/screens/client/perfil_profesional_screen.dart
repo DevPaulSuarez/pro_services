@@ -36,8 +36,7 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
   @override
   void initState() {
     super.initState();
-    _resenasFuture =
-        ResenaService.getPorProfesional(widget.profesional.id);
+    _resenasFuture = ResenaService.getPorProfesional(widget.profesional.id);
     _fotosGaleriaFuture = _cargarFotosPublicas();
   }
 
@@ -45,7 +44,8 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
     try {
       final res = await http.get(
         Uri.parse(
-            'http://localhost:5099/profesionales/${widget.profesional.id}/fotos-publicas'),
+          'http://localhost:5099/profesionales/${widget.profesional.id}/fotos-publicas',
+        ),
       );
       if (res.statusCode != 200) return [];
       final list = jsonDecode(res.body) as List;
@@ -59,15 +59,15 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profesional   = widget.profesional;
-    final catColor      = widget.catColor;
-    final isDark        = Theme.of(context).brightness == Brightness.dark;
-    final bgColor       = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
-    final cardBg        = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textPrimary   = isDark ? Colors.white : const Color(0xFF0F172A);
+    final profesional = widget.profesional;
+    final catColor = widget.catColor;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
+    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
     final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
-    final btnColor      = isDark ? const Color(0xFF64748B) : const Color(0xFF111827);
-    final chipBg        = catColor.withValues(alpha: isDark ? 0.18 : 0.1);
+    final btnColor = isDark ? const Color(0xFF64748B) : const Color(0xFF111827);
+    final chipBg = catColor.withValues(alpha: isDark ? 0.18 : 0.1);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -75,8 +75,10 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
         backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded,
-              color: isDark ? Colors.white : const Color(0xFF0F172A)),
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: isDark ? Colors.white : const Color(0xFF0F172A),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -153,7 +155,9 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                       ),
                       if (profesional.nivelVerificacion > 0) ...[
                         const SizedBox(width: 4),
-                        _VerificacionBadge(nivel: profesional.nivelVerificacion),
+                        _VerificacionBadge(
+                          nivel: profesional.nivelVerificacion,
+                        ),
                       ],
                     ],
                   ),
@@ -169,8 +173,10 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                   const SizedBox(height: 10),
                   // Badge de disponibilidad
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: profesional.disponibleAhora
                           ? const Color(0xFF10B981).withValues(alpha: 0.12)
@@ -251,7 +257,8 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                               foregroundColor: btnColor,
                               side: BorderSide(color: btnColor),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                             onPressed: () async {
                               final result = await Navigator.push(
@@ -273,12 +280,16 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                               }
                             },
                             icon: const Icon(
-                                Icons.chat_bubble_outline_rounded,
-                                size: 16),
-                            label: const Text('Contactar',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600)),
+                              Icons.chat_bubble_outline_rounded,
+                              size: 16,
+                            ),
+                            label: const Text(
+                              'Contactar',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -292,7 +303,8 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                               foregroundColor: Colors.white,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                             onPressed: () async {
                               final result = await Navigator.push(
@@ -313,18 +325,24 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                                 );
                               }
                             },
-                            icon: const Icon(Icons.request_quote_rounded,
-                                size: 16),
-                            label: const Text('Cotización',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600)),
+                            icon: const Icon(
+                              Icons.request_quote_rounded,
+                              size: 16,
+                            ),
+                            label: const Text(
+                              'Cotización',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  if (profesional.latitud != null && profesional.longitud != null) ...[
+                  if (profesional.latitud != null &&
+                      profesional.longitud != null) ...[
                     const SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
@@ -334,18 +352,26 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                           foregroundColor: btnColor,
                           side: BorderSide(color: btnColor),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                         icon: const Icon(Icons.map_rounded, size: 16),
-                        label: const Text('Ver en mapa',
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w600)),
+                        label: const Text(
+                          'Ver en mapa',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         onPressed: () async {
                           final url = Uri.parse(
                             'https://www.google.com/maps/search/?api=1&query=${profesional.latitud},${profesional.longitud}',
                           );
                           if (await canLaunchUrl(url)) {
-                            launchUrl(url, mode: LaunchMode.externalApplication);
+                            launchUrl(
+                              url,
+                              mode: LaunchMode.externalApplication,
+                            );
                           }
                         },
                       ),
@@ -363,8 +389,11 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
               isDark: isDark,
               child: Text(
                 profesional.sobreMi,
-                style:
-                    TextStyle(fontSize: 13, color: textSecondary, height: 1.5),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: textSecondary,
+                  height: 1.5,
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -379,25 +408,33 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                   // Ubicación + botón Maps
                   Row(
                     children: [
-                      Icon(Icons.location_on_rounded,
-                          size: 16, color: catColor),
+                      Icon(
+                        Icons.location_on_rounded,
+                        size: 16,
+                        color: catColor,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: Text(profesional.ubicacion,
-                            style: TextStyle(
-                                fontSize: 13, color: textSecondary)),
+                        child: Text(
+                          profesional.ubicacion,
+                          style: TextStyle(fontSize: 13, color: textSecondary),
+                        ),
                       ),
                       GestureDetector(
                         onTap: () async {
-                          final query =
-                              Uri.encodeComponent(profesional.ubicacion);
+                          final query = Uri.encodeComponent(
+                            profesional.ubicacion,
+                          );
                           final uri = Uri.parse(
-                              'https://maps.google.com/?q=$query');
+                            'https://maps.google.com/?q=$query',
+                          );
                           if (await canLaunchUrl(uri)) launchUrl(uri);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
                           decoration: BoxDecoration(
                             color: catColor.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(8),
@@ -405,14 +442,20 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.map_rounded,
-                                  size: 13, color: catColor),
+                              Icon(
+                                Icons.map_rounded,
+                                size: 13,
+                                color: catColor,
+                              ),
                               const SizedBox(width: 4),
-                              Text('Maps',
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600,
-                                      color: catColor)),
+                              Text(
+                                'Maps',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: catColor,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -471,22 +514,26 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                 spacing: 8,
                 runSpacing: 8,
                 children: profesional.habilidades
-                    .map((h) => Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: chipBg,
-                            borderRadius: BorderRadius.circular(20),
+                    .map(
+                      (h) => Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: chipBg,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          h,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: catColor,
+                            fontWeight: FontWeight.w600,
                           ),
-                          child: Text(
-                            h,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: catColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ))
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -510,9 +557,10 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                   }
                   final fotos = snapshot.data ?? [];
                   if (fotos.isEmpty) {
-                    return Text('Aún no hay fotos de trabajos',
-                        style: TextStyle(
-                            fontSize: 12, color: textSecondary));
+                    return Text(
+                      'Aún no hay fotos de trabajos',
+                      style: TextStyle(fontSize: 12, color: textSecondary),
+                    );
                   }
                   return GridView.count(
                     crossAxisCount: 3,
@@ -521,24 +569,26 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                     crossAxisSpacing: 6,
                     mainAxisSpacing: 6,
                     children: fotos
-                        .map((f) => ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                'http://localhost:5099${f.url}',
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Container(
+                        .map(
+                          (f) => ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              'http://localhost:5099${f.url}',
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, _, _) => Container(
+                                color: isDark
+                                    ? const Color(0xFF334155)
+                                    : Colors.grey.shade200,
+                                child: Icon(
+                                  Icons.image_not_supported_rounded,
                                   color: isDark
-                                      ? const Color(0xFF334155)
-                                      : Colors.grey.shade200,
-                                  child: Icon(
-                                    Icons.image_not_supported_rounded,
-                                    color: isDark
-                                        ? Colors.grey.shade600
-                                        : Colors.grey.shade400,
-                                  ),
+                                      ? Colors.grey.shade600
+                                      : Colors.grey.shade400,
                                 ),
                               ),
-                            ))
+                            ),
+                          ),
+                        )
                         .toList(),
                   );
                 },
@@ -567,15 +617,21 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
                         children: [
-                          Icon(Icons.wifi_off_rounded,
-                              size: 16,
-                              color: isDark
-                                  ? Colors.grey.shade600
-                                  : Colors.grey.shade400),
+                          Icon(
+                            Icons.wifi_off_rounded,
+                            size: 16,
+                            color: isDark
+                                ? Colors.grey.shade600
+                                : Colors.grey.shade400,
+                          ),
                           const SizedBox(width: 8),
-                          Text('No se pudieron cargar las reseñas',
-                              style: TextStyle(
-                                  fontSize: 12, color: textSecondary)),
+                          Text(
+                            'No se pudieron cargar las reseñas',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: textSecondary,
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -586,15 +642,21 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
                         children: [
-                          Icon(Icons.rate_review_outlined,
-                              size: 16,
-                              color: isDark
-                                  ? Colors.grey.shade600
-                                  : Colors.grey.shade400),
+                          Icon(
+                            Icons.rate_review_outlined,
+                            size: 16,
+                            color: isDark
+                                ? Colors.grey.shade600
+                                : Colors.grey.shade400,
+                          ),
                           const SizedBox(width: 8),
-                          Text('Aún no hay reseñas',
-                              style: TextStyle(
-                                  fontSize: 12, color: textSecondary)),
+                          Text(
+                            'Aún no hay reseñas',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: textSecondary,
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -604,10 +666,11 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                       for (int i = 0; i < resenas.length; i++) ...[
                         if (i > 0)
                           Divider(
-                              height: 24,
-                              color: isDark
-                                  ? Colors.grey.shade800
-                                  : Colors.grey.shade200),
+                            height: 24,
+                            color: isDark
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
+                          ),
                         _ResenaItem(
                           autor: resenas[i].nombreUsuario,
                           fecha: resenas[i].fecha,
@@ -736,7 +799,9 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                       label: const Text(
                         'Enviar mensaje',
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
@@ -808,11 +873,14 @@ class _Stat extends StatelessWidget {
       children: [
         Icon(icon, color: iconColor, size: 20),
         const SizedBox(height: 4),
-        Text(value,
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                color: textPrimary)),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: textPrimary,
+          ),
+        ),
         Text(label, style: TextStyle(fontSize: 11, color: textSecondary)),
       ],
     );
@@ -858,8 +926,7 @@ class _Section extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color:
-                Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -868,11 +935,14 @@ class _Section extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: textPrimary)),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: textPrimary,
+            ),
+          ),
           const SizedBox(height: 12),
           child,
         ],
@@ -942,9 +1012,10 @@ class _ResenaItem extends StatelessWidget {
               child: Text(
                 autor.isNotEmpty ? autor[0].toUpperCase() : '?',
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: catColor),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: catColor,
+                ),
               ),
             ),
             const SizedBox(width: 10),
@@ -952,45 +1023,52 @@ class _ResenaItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(autor,
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: textPrimary)),
-                  Text(fecha,
-                      style:
-                          TextStyle(fontSize: 11, color: textSecondary)),
+                  Text(
+                    autor,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: textPrimary,
+                    ),
+                  ),
+                  Text(
+                    fecha,
+                    style: TextStyle(fontSize: 11, color: textSecondary),
+                  ),
                 ],
               ),
             ),
             Row(
               children: List.generate(
-                  5,
-                  (i) => Icon(
-                        Icons.star_rounded,
-                        size: 13,
-                        color: i < estrellas
-                            ? const Color(0xFFFBBF24)
-                            : (isDark
-                                ? Colors.grey.shade700
-                                : Colors.grey.shade300),
-                      )),
+                5,
+                (i) => Icon(
+                  Icons.star_rounded,
+                  size: 13,
+                  color: i < estrellas
+                      ? const Color(0xFFFBBF24)
+                      : (isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+                ),
+              ),
             ),
           ],
         ),
         if (titulo.isNotEmpty) ...[
           const SizedBox(height: 6),
-          Text(titulo,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: textPrimary)),
+          Text(
+            titulo,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: textPrimary,
+            ),
+          ),
         ],
         if (texto.isNotEmpty) ...[
           const SizedBox(height: 4),
-          Text(texto,
-              style: TextStyle(
-                  fontSize: 12, color: textSecondary, height: 1.4)),
+          Text(
+            texto,
+            style: TextStyle(fontSize: 12, color: textSecondary, height: 1.4),
+          ),
         ],
       ],
     );

@@ -184,7 +184,7 @@ class _CrearSolicitudAbiertaScreenState
                 builder: (context, snap) {
                   final tipos = snap.data ?? [];
                   return DropdownButtonFormField<TipoProfesion>(
-                    value: _categoriaSeleccionada,
+                    initialValue: _categoriaSeleccionada,
                     isExpanded: true,
                     decoration: InputDecoration(
                       labelText: snap.connectionState == ConnectionState.waiting
@@ -321,7 +321,7 @@ class _CrearSolicitudAbiertaScreenState
                     ),
                     Switch(
                       value: _esUrgente,
-                      activeColor: const Color(0xFFEF4444),
+                      activeThumbColor: const Color(0xFFEF4444),
                       onChanged: (v) => setState(() => _esUrgente = v),
                     ),
                   ],

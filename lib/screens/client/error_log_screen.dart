@@ -158,7 +158,7 @@ class _ErrorLogScreenState extends State<ErrorLogScreen> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: errors.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
               final err = errors[index] as Map<String, dynamic>;
               final level = (err['level'] ?? 'Error') as String;

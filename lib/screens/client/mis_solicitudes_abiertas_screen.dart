@@ -30,8 +30,8 @@ class _MisSolicitudesAbiertasScreenState
     _futuro = SolicitudAbiertaService.getMis(widget.token);
   }
 
-  void _reload() => setState(
-      () => _futuro = SolicitudAbiertaService.getMis(widget.token));
+  void _reload() =>
+      setState(() => _futuro = SolicitudAbiertaService.getMis(widget.token));
 
   List<SolicitudAbierta> _filtrar(List<SolicitudAbierta> lista) {
     if (_filtro == 'Todas') return lista;
@@ -41,28 +41,40 @@ class _MisSolicitudesAbiertasScreenState
 
   Color _estadoColor(String estado) {
     switch (estado) {
-      case 'abierta':     return const Color(0xFF10B981);
-      case 'en_revision': return const Color(0xFFF59E0B);
-      case 'cerrada':     return Colors.grey;
-      default:            return Colors.grey;
+      case 'abierta':
+        return const Color(0xFF10B981);
+      case 'en_revision':
+        return const Color(0xFFF59E0B);
+      case 'cerrada':
+        return Colors.grey;
+      default:
+        return Colors.grey;
     }
   }
 
   String _estadoLabel(String estado) {
     switch (estado) {
-      case 'abierta':     return 'Abierta';
-      case 'en_revision': return 'En revisión';
-      case 'cerrada':     return 'Cerrada';
-      default:            return estado;
+      case 'abierta':
+        return 'Abierta';
+      case 'en_revision':
+        return 'En revisión';
+      case 'cerrada':
+        return 'Cerrada';
+      default:
+        return estado;
     }
   }
 
   IconData _estadoIcon(String estado) {
     switch (estado) {
-      case 'abierta':     return Icons.radio_button_checked_rounded;
-      case 'en_revision': return Icons.hourglass_top_rounded;
-      case 'cerrada':     return Icons.lock_rounded;
-      default:            return Icons.circle_outlined;
+      case 'abierta':
+        return Icons.radio_button_checked_rounded;
+      case 'en_revision':
+        return Icons.hourglass_top_rounded;
+      case 'cerrada':
+        return Icons.lock_rounded;
+      default:
+        return Icons.circle_outlined;
     }
   }
 
@@ -72,15 +84,20 @@ class _MisSolicitudesAbiertasScreenState
       builder: (ctx) => AlertDialog(
         title: const Text('Cerrar solicitud'),
         content: const Text(
-            '¿Estás seguro de que querés cerrar esta solicitud? No podrá reabrirse.'),
+          '¿Estás seguro de que querés cerrar esta solicitud? No podrá reabrirse.',
+        ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancelar')),
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancelar'),
+          ),
           TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Cerrar',
-                  style: TextStyle(color: Color(0xFFEF4444)))),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text(
+              'Cerrar',
+              style: TextStyle(color: Color(0xFFEF4444)),
+            ),
+          ),
         ],
       ),
     );
@@ -108,10 +125,10 @@ class _MisSolicitudesAbiertasScreenState
 
   @override
   Widget build(BuildContext context) {
-    final isDark        = Theme.of(context).brightness == Brightness.dark;
-    final bgColor       = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
-    final cardBg        = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textPrimary   = isDark ? Colors.white : const Color(0xFF0F172A);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF5F7FA);
+    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
     final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
 
     return Scaffold(
@@ -120,16 +137,19 @@ class _MisSolicitudesAbiertasScreenState
         backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded,
-              color: isDark ? Colors.white : const Color(0xFF0F172A)),
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: isDark ? Colors.white : const Color(0xFF0F172A),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Mis publicaciones',
           style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: isDark ? Colors.white : const Color(0xFF0F172A)),
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: isDark ? Colors.white : const Color(0xFF0F172A),
+          ),
         ),
         actions: [
           IconButton(
@@ -159,20 +179,25 @@ class _MisSolicitudesAbiertasScreenState
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 7),
+                          horizontal: 14,
+                          vertical: 7,
+                        ),
                         decoration: BoxDecoration(
                           color: activo
                               ? const Color(0xFF6366F1)
                               : (isDark
-                                  ? const Color(0xFF0F172A)
-                                  : const Color(0xFFF1F5F9)),
+                                    ? const Color(0xFF0F172A)
+                                    : const Color(0xFFF1F5F9)),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text(f.$1,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: activo ? Colors.white : textSecondary)),
+                        child: Text(
+                          f.$1,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: activo ? Colors.white : textSecondary,
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -202,12 +227,16 @@ class _MisSolicitudesAbiertasScreenState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.campaign_outlined,
-                            size: 52, color: textSecondary),
+                        Icon(
+                          Icons.campaign_outlined,
+                          size: 52,
+                          color: textSecondary,
+                        ),
                         const SizedBox(height: 12),
-                        Text('Sin publicaciones en esta categoría',
-                            style:
-                                TextStyle(fontSize: 14, color: textSecondary)),
+                        Text(
+                          'Sin publicaciones en esta categoría',
+                          style: TextStyle(fontSize: 14, color: textSecondary),
+                        ),
                       ],
                     ),
                   );
@@ -215,7 +244,7 @@ class _MisSolicitudesAbiertasScreenState
                 return ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: lista.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, i) {
                     final s = lista[i];
                     final color = _estadoColor(s.estadoSolicitud);
@@ -227,7 +256,8 @@ class _MisSolicitudesAbiertasScreenState
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(
-                                alpha: isDark ? 0.3 : 0.06),
+                              alpha: isDark ? 0.3 : 0.06,
+                            ),
                             blurRadius: 8,
                             offset: const Offset(0, 3),
                           ),
@@ -260,10 +290,13 @@ class _MisSolicitudesAbiertasScreenState
                                           const SizedBox(width: 6),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 6, vertical: 2),
+                                              horizontal: 6,
+                                              vertical: 2,
+                                            ),
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFFEF4444)
-                                                  .withValues(alpha: 0.12),
+                                              color: const Color(
+                                                0xFFEF4444,
+                                              ).withValues(alpha: 0.12),
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
@@ -296,22 +329,28 @@ class _MisSolicitudesAbiertasScreenState
                               // Badge estado
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 4),
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   color: color.withValues(alpha: 0.12),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(_estadoIcon(s.estadoSolicitud),
-                                        size: 11, color: color),
+                                    Icon(
+                                      _estadoIcon(s.estadoSolicitud),
+                                      size: 11,
+                                      color: color,
+                                    ),
                                     const SizedBox(width: 4),
                                     Text(
                                       _estadoLabel(s.estadoSolicitud),
                                       style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700,
-                                          color: color),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: color,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -324,9 +363,11 @@ class _MisSolicitudesAbiertasScreenState
                           Row(
                             children: [
                               if (s.presupuestoMax != null) ...[
-                                Icon(Icons.attach_money_rounded,
-                                    size: 14,
-                                    color: const Color(0xFF22C55E)),
+                                Icon(
+                                  Icons.attach_money_rounded,
+                                  size: 14,
+                                  color: const Color(0xFF22C55E),
+                                ),
                                 Text(
                                   'Hasta \$${s.presupuestoMax!.toStringAsFixed(0)}',
                                   style: const TextStyle(
@@ -337,23 +378,39 @@ class _MisSolicitudesAbiertasScreenState
                                 ),
                                 const SizedBox(width: 12),
                               ],
-                              Icon(Icons.calendar_today_rounded,
-                                  size: 13, color: textSecondary),
+                              Icon(
+                                Icons.calendar_today_rounded,
+                                size: 13,
+                                color: textSecondary,
+                              ),
                               const SizedBox(width: 4),
-                              Text(s.fecha,
-                                  style: TextStyle(
-                                      fontSize: 12, color: textSecondary)),
+                              Text(
+                                s.fecha,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: textSecondary,
+                                ),
+                              ),
                               if (s.fechaLimite != null) ...[
                                 const SizedBox(width: 8),
-                                Text('·',
-                                    style: TextStyle(color: textSecondary)),
+                                Text(
+                                  '·',
+                                  style: TextStyle(color: textSecondary),
+                                ),
                                 const SizedBox(width: 8),
-                                Icon(Icons.event_rounded,
-                                    size: 13, color: textSecondary),
+                                Icon(
+                                  Icons.event_rounded,
+                                  size: 13,
+                                  color: textSecondary,
+                                ),
                                 const SizedBox(width: 4),
-                                Text('Límite: ${s.fechaLimite!}',
-                                    style: TextStyle(
-                                        fontSize: 12, color: textSecondary)),
+                                Text(
+                                  'Límite: ${s.fechaLimite!}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: textSecondary,
+                                  ),
+                                ),
                               ],
                             ],
                           ),
@@ -368,16 +425,20 @@ class _MisSolicitudesAbiertasScreenState
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: const Color(0xFFEF4444),
                                   side: const BorderSide(
-                                      color: Color(0xFFEF4444)),
+                                    color: Color(0xFFEF4444),
+                                  ),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10)),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                                 icon: const Icon(Icons.lock_rounded, size: 14),
-                                label: const Text('Cerrar solicitud',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700)),
+                                label: const Text(
+                                  'Cerrar solicitud',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                                 onPressed: () => _cerrarSolicitud(s.id),
                               ),
                             ),
@@ -400,40 +461,49 @@ class _ErrorView extends StatelessWidget {
   final String mensaje;
   final VoidCallback onRetry;
   final Color textSecondary;
-  const _ErrorView(
-      {required this.mensaje,
-      required this.onRetry,
-      required this.textSecondary});
+  const _ErrorView({
+    required this.mensaje,
+    required this.onRetry,
+    required this.textSecondary,
+  });
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.error_outline_rounded,
-                size: 48, color: Colors.redAccent),
-            const SizedBox(height: 12),
-            Text('Error al cargar',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: textSecondary)),
-            const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Text(mensaje,
-                  style: TextStyle(fontSize: 12, color: textSecondary),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded, size: 16),
-              label: const Text('Reintentar'),
-            ),
-          ],
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(
+          Icons.error_outline_rounded,
+          size: 48,
+          color: Colors.redAccent,
         ),
-      );
+        const SizedBox(height: 12),
+        Text(
+          'Error al cargar',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: textSecondary,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Text(
+            mensaje,
+            style: TextStyle(fontSize: 12, color: textSecondary),
+            textAlign: TextAlign.center,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton.icon(
+          onPressed: onRetry,
+          icon: const Icon(Icons.refresh_rounded, size: 16),
+          label: const Text('Reintentar'),
+        ),
+      ],
+    ),
+  );
 }

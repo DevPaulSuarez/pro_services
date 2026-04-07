@@ -45,7 +45,7 @@ class UbicacionService {
   static double _sqrt(double x) {
     if (x <= 0) return 0;
     double r = x;
-    for (int i = 0; i < 10; i++) r = (r + x / r) / 2;
+    for (int i = 0; i < 10; i++) { r = (r + x / r) / 2; }
     return r;
   }
 }

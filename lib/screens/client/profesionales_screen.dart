@@ -91,7 +91,7 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
     return lista.where((p) {
       if (_query.isNotEmpty &&
           !p.nombre.toLowerCase().contains(_query) &&
-          !p.especialidad.toLowerCase().contains(_query)) return false;
+          !p.especialidad.toLowerCase().contains(_query)) { return false; }
       if (p.calificacion < _minCalificacion) return false;
       if (p.precioPorHora > _maxPrecio) return false;
       if (_soloDisponibles && !p.disponibleAhora) return false;
@@ -108,8 +108,6 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSecondary = isDark ? Colors.grey.shade400 : Colors.grey.shade600;
-
     showModalBottomSheet(
       context: context,
       backgroundColor: cardBg,
@@ -200,7 +198,7 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
                     children: [
                       Switch(
                         value: tmpSoloDisp,
-                        activeColor: const Color(0xFF6366F1),
+                        activeThumbColor: const Color(0xFF6366F1),
                         onChanged: (v) =>
                             setSheetState(() => tmpSoloDisp = v),
                       ),
