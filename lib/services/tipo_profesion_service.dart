@@ -1,13 +1,14 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/tipo_profesion.dart';
 
 class TipoProfesionService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   static Future<List<TipoProfesion>> getTipos() async {
     final res = await http.get(Uri.parse('$_base/tipos-profesion'));
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((e) => TipoProfesion.fromJson(e as Map<String, dynamic>)).toList();
   }

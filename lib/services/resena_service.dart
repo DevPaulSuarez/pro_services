@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/resena.dart';
 
 class ResenaService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Reseñas de un profesional — endpoint público, no requiere token.
   static Future<List<Resena>> getPorProfesional(int idProfesional) async {

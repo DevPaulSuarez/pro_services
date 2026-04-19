@@ -17,6 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
   int _selectedRole = 0;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _emailError = false;
+  bool _passwordError = false;
+  bool _loading = false;
 
   @override
   void dispose() {
@@ -26,16 +29,47 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _onLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    // Validación local
+    final emailVacio = email.isEmpty;
+    final passVacio = password.isEmpty;
+    if (emailVacio || passVacio) {
+      setState(() {
+        _emailError = emailVacio;
+        _passwordError = passVacio;
+      });
+      _mostrarError('Completa todos los campos.');
+      return;
+    }
+
+    setState(() {
+      _emailError = false;
+      _passwordError = false;
+      _loading = true;
+    });
+
     try {
       final result = await AuthService.login(
-        _emailController.text.trim(),
-        _passwordController.text,
+        email,
+        password,
         rol: _selectedRole == 0 ? 'cliente' : 'profesional',
       );
       ErrorLogService.configurar(
         token: result.token,
-        email: _emailController.text.trim(),
+        email: email,
       );
+      final rolSeleccionado = _selectedRole == 0 ? 'cliente' : 'profesional';
+      if (result.rol != rolSeleccionado) {
+        setState(() { _loading = false; });
+        _mostrarError(
+          result.rol == 'profesional'
+              ? 'Esta cuenta es de profesional. Selecciona "Soy Profesional".'
+              : 'Esta cuenta es de contratador. Selecciona "Soy Contratador".',
+        );
+        return;
+      }
       final destination = result.rol == 'cliente'
           ? HomeClientScreen(token: result.token, nombre: result.nombre)
           : HomeProfessionalScreen(token: result.token, nombre: result.nombre);
@@ -46,10 +80,43 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al iniciar sesión: $e')),
-      );
+      final raw = e.toString().replaceFirst('Exception: ', '');
+      final lower = raw.toLowerCase();
+      final esCredenciales = lower.contains('401') ||
+          lower.contains('unauthorized') ||
+          lower.contains('contraseña') ||
+          lower.contains('password') ||
+          lower.contains('credentials');
+      setState(() {
+        _emailError = esCredenciales;
+        _passwordError = esCredenciales;
+        _loading = false;
+      });
+      _mostrarError(raw.isNotEmpty ? raw : 'Error al iniciar sesión. Intenta de nuevo.');
     }
+  }
+
+  void _mostrarError(String mensaje) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.error_outline_rounded,
+                  color: Colors.white, size: 18),
+              const SizedBox(width: 8),
+              Expanded(child: Text(mensaje)),
+            ],
+          ),
+          backgroundColor: const Color(0xFFEF4444),
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: const EdgeInsets.all(16),
+          duration: const Duration(seconds: 3),
+        ),
+      );
   }
 
   @override
@@ -264,6 +331,8 @@ class _LoginScreenState extends State<LoginScreen> {
             icon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
             isDark: isDark,
+            hasError: _emailError,
+            onChanged: (_) => setState(() => _emailError = false),
           ),
           const SizedBox(height: 16),
           _buildInputField(
@@ -273,20 +342,30 @@ class _LoginScreenState extends State<LoginScreen> {
             icon: Icons.lock_outline,
             obscureText: true,
             isDark: isDark,
+            hasError: _passwordError,
+            onChanged: (_) => setState(() => _passwordError = false),
           ),
           const SizedBox(height: 28),
           SizedBox(
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              onPressed: _onLogin,
+              onPressed: _loading ? null : _onLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: isDark ? const Color(0xFF475569) : const Color(0xFF111827),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 elevation: 0,
               ),
-              child: const Text('Iniciar sesión', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+              child: _loading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2, color: Colors.white),
+                    )
+                  : const Text('Iniciar sesión',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
             ),
           ),
           const SizedBox(height: 20),
@@ -323,7 +402,17 @@ class _LoginScreenState extends State<LoginScreen> {
     required bool isDark,
     TextInputType keyboardType = TextInputType.text,
     bool obscureText = false,
+    bool hasError = false,
+    ValueChanged<String>? onChanged,
   }) {
+    final errorColor = const Color(0xFFEF4444);
+    final borderColor = hasError
+        ? errorColor
+        : (isDark ? Colors.grey.shade700 : Colors.grey.shade200);
+    final fillColor = hasError
+        ? errorColor.withValues(alpha: 0.06)
+        : (isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -331,7 +420,9 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: isDark ? Colors.grey.shade300 : const Color(0xFF374151),
+            color: hasError
+                ? errorColor
+                : (isDark ? Colors.grey.shade300 : const Color(0xFF374151)),
           ),
         ),
         const SizedBox(height: 6),
@@ -339,26 +430,31 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
+          onChanged: onChanged,
           style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1A1A2E)),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: isDark ? Colors.grey.shade600 : Colors.grey.shade400, fontSize: 14),
-            prefixIcon: Icon(icon, size: 20, color: isDark ? Colors.grey.shade500 : Colors.grey.shade400),
+            prefixIcon: Icon(icon, size: 20,
+                color: hasError ? errorColor : (isDark ? Colors.grey.shade500 : Colors.grey.shade400)),
+            suffixIcon: hasError
+                ? Icon(Icons.error_outline_rounded, size: 18, color: errorColor)
+                : null,
             filled: true,
-            fillColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
+            fillColor: fillColor,
             contentPadding: const EdgeInsets.symmetric(vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: isDark ? Colors.grey.shade700 : Colors.grey.shade200),
+              borderSide: BorderSide(color: borderColor),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: isDark ? Colors.grey.shade700 : Colors.grey.shade200),
+              borderSide: BorderSide(color: borderColor),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF111827),
+                color: hasError ? errorColor : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF111827)),
                 width: 1.5,
               ),
             ),

@@ -15,6 +15,7 @@ import 'package:pro_services/services/perfil_profesional_service.dart';
 import 'package:pro_services/models/resena.dart';
 import 'package:pro_services/services/proyecto_service.dart';
 import 'package:pro_services/services/resena_service.dart';
+import 'package:pro_services/services/disponibilidad_service.dart';
 import 'package:pro_services/services/notificacion_service.dart';
 import 'notificaciones_screen.dart';
 import 'conversaciones_screen.dart';
@@ -41,7 +42,7 @@ class _HomeProfessionalScreenState extends State<HomeProfessionalScreen> {
   late Future<int> _pendientesFuture;
   late Future<IngresoMes> _ingresosFuture;
 
-  bool _disponible = true;
+  bool _disponible = false;
   int _tabIndex = 0;
   int _noLeidasCount = 0;
 
@@ -50,7 +51,10 @@ class _HomeProfessionalScreenState extends State<HomeProfessionalScreen> {
   @override
   void initState() {
     super.initState();
-    _perfilFuturo = PerfilProfesionalService.getMe(widget.token);
+    _perfilFuturo = PerfilProfesionalService.getMe(widget.token)
+      ..then((p) {
+        if (mounted) setState(() => _disponible = p.disponibleAhora);
+      }).catchError((_) {});
     _proyectosFuturo = ProyectoService.getProyectos(widget.token);
     _pendientesFuture = ProyectoService.getProyectos(widget.token, estado: 'Pendiente')
         .then((list) => list.length)
@@ -317,7 +321,24 @@ class _HomeProfessionalScreenState extends State<HomeProfessionalScreen> {
                             cardBg: cardBg,
                             textPrimary: textPrimary,
                             textSecondary: textSecondary,
-                            onToggle: (val) => setState(() => _disponible = val),
+                            onToggle: (val) async {
+                              final messenger = ScaffoldMessenger.of(context);
+                              setState(() => _disponible = val);
+                              try {
+                                await DisponibilidadService.setDisponibleManual(
+                                    widget.token, val);
+                              } catch (e) {
+                                if (!mounted) return;
+                                setState(() => _disponible = !val);
+                                messenger.showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error al cambiar disponibilidad: $e'),
+                                    backgroundColor: const Color(0xFFEF4444),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                            },
                             porcentaje: _calcularPorcentaje(perfil),
                             onEditPressed: () => Navigator.push(
                               context,
@@ -1854,7 +1875,7 @@ class _ProyectoCardState extends State<_ProyectoCard> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', '')), backgroundColor: Colors.red),
       );
     } finally {
       if (mounted) setState(() => _cargando = false);

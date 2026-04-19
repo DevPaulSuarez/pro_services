@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/busqueda_resultado.dart';
 
 class BusquedaService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   static Future<List<BusquedaResultado>> buscar(
     String token, {
@@ -29,7 +30,7 @@ class BusquedaService {
       },
     );
     final res = await http.get(uri, headers: _headers(token));
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final data = jsonDecode(res.body) as List;
     return data
         .map((e) => BusquedaResultado.fromJson(e as Map<String, dynamic>))

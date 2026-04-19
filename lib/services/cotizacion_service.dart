@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/cotizacion.dart';
 
 class CotizacionService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Cotizaciones de un usuario autenticado.
   static Future<List<Cotizacion>> getPorUsuario(
@@ -12,7 +13,7 @@ class CotizacionService {
       Uri.parse('$_base/api/Cotizacion/PorUsuario/$idUsuario'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => Cotizacion.fromJson(e as Map<String, dynamic>))
@@ -26,7 +27,7 @@ class CotizacionService {
       Uri.parse('$_base/api/Cotizacion/PorProfesional/$idProfesional'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => Cotizacion.fromJson(e as Map<String, dynamic>))
@@ -39,7 +40,7 @@ class CotizacionService {
       Uri.parse('$_base/api/Cotizacion/$id/aceptar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Rechazar una cotización.
@@ -48,7 +49,7 @@ class CotizacionService {
       Uri.parse('$_base/api/Cotizacion/$id/rechazar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Crear una cotización (profesional → cliente).
@@ -77,19 +78,13 @@ class CotizacionService {
         'usuarioCreacion': 'app',
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

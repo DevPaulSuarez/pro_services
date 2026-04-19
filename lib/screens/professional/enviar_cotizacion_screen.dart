@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_services/config.dart';
 import 'package:pro_services/main.dart';
 import 'package:pro_services/models/proyecto.dart';
 import 'package:pro_services/models/plantilla_cotizacion.dart';
@@ -177,7 +178,7 @@ class _EnviarCotizacionScreenState extends State<EnviarCotizacionScreen> {
   static Future<void> _enviarCotizacion(
       String token, Map<String, dynamic> body) async {
     final res = await http.post(
-      Uri.parse('http://localhost:5099/api/Cotizacion'),
+      Uri.parse('${AppConfig.apiBase}/api/Cotizacion'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

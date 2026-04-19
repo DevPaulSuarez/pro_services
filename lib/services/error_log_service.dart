@@ -1,8 +1,9 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ErrorLogService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
   static final List<Map<String, dynamic>> _pendientes = [];
   static String? _token;
   static String? _userEmail;

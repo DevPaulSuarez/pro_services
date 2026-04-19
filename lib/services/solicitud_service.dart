@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/solicitud_cliente.dart';
 
 class SolicitudService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Solicitudes enviadas por el cliente autenticado.
   static Future<List<SolicitudCliente>> getMisSolicitudes(String token) async {
@@ -11,7 +12,7 @@ class SolicitudService {
       Uri.parse('$_base/clientes/me/solicitudes'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => SolicitudCliente.fromJson(e as Map<String, dynamic>))
@@ -42,19 +43,13 @@ class SolicitudService {
         'fecha_fin': fechaFin,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

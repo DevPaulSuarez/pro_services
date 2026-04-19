@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/disputa.dart';
 
 class DisputaService {
-  static const String _base = 'http://localhost:5099';
+  static const String _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -31,7 +32,7 @@ class DisputaService {
         'descripcion': descripcion,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return (jsonDecode(res.body)['id'] as int?) ?? 0;
   }
 
@@ -40,7 +41,7 @@ class DisputaService {
       Uri.parse('$_base/api/Disputa/me'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((j) => Disputa.fromJson(j as Map<String, dynamic>)).toList();
   }

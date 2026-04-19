@@ -46,12 +46,28 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   ThemeMode _themeMode = ThemeMode.dark;
+  bool _loaded = false;
 
-  void toggleTheme() {
+  @override
+  void initState() {
+    super.initState();
+    _loadPrefs();
+  }
+
+  Future<void> _loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDark = prefs.getBool('theme_dark') ?? true;
     setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+      _loaded = true;
     });
+  }
+
+  void toggleTheme() async {
+    final isDark = _themeMode == ThemeMode.light;
+    setState(() => _themeMode = isDark ? ThemeMode.dark : ThemeMode.light);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('theme_dark', isDark);
   }
 
   bool get isDark => _themeMode == ThemeMode.dark;
@@ -63,6 +79,11 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_loaded) {
+      return const MaterialApp(
+        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      );
+    }
     return MaterialApp(
       title: 'Pro Services',
       debugShowCheckedModeBanner: false,

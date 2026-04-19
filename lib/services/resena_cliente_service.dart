@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/resena_cliente.dart';
 
 class ResenaClienteService {
-  static const String _base = 'http://localhost:5099';
+  static const String _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ class ResenaClienteService {
         'comentario': ?comentario,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return (jsonDecode(res.body)['id'] as int?) ?? 0;
   }
 
@@ -41,7 +42,7 @@ class ResenaClienteService {
     final res = await http.get(
       Uri.parse('$_base/api/ResenaCliente/PorUsuario/$idUsuario'),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((j) => ResenaCliente.fromJson(j as Map<String, dynamic>)).toList();
   }
@@ -51,7 +52,7 @@ class ResenaClienteService {
       Uri.parse('$_base/api/ResenaCliente/PorProfesional/$idProfesional'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((j) => ResenaCliente.fromJson(j as Map<String, dynamic>)).toList();
   }

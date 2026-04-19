@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/hito_servicio.dart';
 
 class HitoService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -22,7 +23,7 @@ class HitoService {
       Uri.parse('$_base/proyectos/$proyectoId/hitos'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final List<dynamic> data = jsonDecode(res.body) as List<dynamic>;
     return data
         .map((e) => HitoServicio.fromJson(e as Map<String, dynamic>))
@@ -49,6 +50,6 @@ class HitoService {
       headers: _headers(token),
       body: jsonEncode(body),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 }

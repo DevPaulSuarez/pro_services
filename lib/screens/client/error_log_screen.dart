@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_services/config.dart';
 import 'package:pro_services/main.dart';
 
 class ErrorLogScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ErrorLogScreenState extends State<ErrorLogScreen> {
 
   static Future<List<dynamic>> _getRecientes(String token) async {
     final res = await http.get(
-      Uri.parse('http://localhost:5099/api/error-log/recientes?cantidad=50'),
+      Uri.parse('${AppConfig.apiBase}/api/error-log/recientes?cantidad=50'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

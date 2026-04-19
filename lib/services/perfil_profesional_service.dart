@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/profesional.dart';
 
 class PerfilProfesionalService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Obtener perfil del profesional autenticado.
   static Future<Profesional> getMe(String token) async {
@@ -11,7 +12,7 @@ class PerfilProfesionalService {
       Uri.parse('$_base/profesionales/me'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return Profesional.fromJson(
         jsonDecode(res.body) as Map<String, dynamic>);
   }
@@ -44,7 +45,7 @@ class PerfilProfesionalService {
         'aniosExperiencia': aniosExperiencia,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Subir foto de perfil.
@@ -59,19 +60,13 @@ class PerfilProfesionalService {
           filename: nombre));
     final streamed = await request.send();
     final res = await http.Response.fromStream(streamed);
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

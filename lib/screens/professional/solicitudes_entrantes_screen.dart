@@ -45,7 +45,7 @@ class _SolicitudesEntrantesScreenState
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text(e.toString().replaceFirst('Exception: ', '')),
           backgroundColor: Color(0xFFEF4444),
         ),
       );
@@ -70,7 +70,7 @@ class _SolicitudesEntrantesScreenState
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text(e.toString().replaceFirst('Exception: ', '')),
           backgroundColor: Color(0xFFEF4444),
         ),
       );

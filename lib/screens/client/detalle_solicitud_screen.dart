@@ -623,7 +623,7 @@ class _DetalleSolicitudScreenState extends State<DetalleSolicitudScreen> {
                       } catch (e) {
                         if (!mounted) return;
                         messenger.showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
+                          SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
                         );
                       }
                     },
@@ -982,7 +982,7 @@ class _CotizacionCardState extends State<_CotizacionCard> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text(e.toString().replaceFirst('Exception: ', '')),
           backgroundColor: const Color(0xFFEF4444),
         ),
       );

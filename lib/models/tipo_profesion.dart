@@ -25,7 +25,7 @@ class TipoProfesion {
       nombre: json['nombre'] as String? ?? '',
       descripcion: json['descripcion'] as String? ?? '',
       icono: json['icono'] as String? ?? '',
-      color: json['color'] as String? ?? 'CCCCCC',
+      color: ((json['color'] as String?) ?? 'CCCCCC').replaceFirst('#', ''),
       profesionalesRegistrados: json['profesionalesRegistrados'] as int? ?? 0,
       presupuestoMinimo: (json['presupuestoMinimo'] as num?)?.toDouble(),
       presupuestoMaximo: (json['presupuestoMaximo'] as num?)?.toDouble(),

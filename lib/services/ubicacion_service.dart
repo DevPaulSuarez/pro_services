@@ -1,8 +1,9 @@
+import 'package:pro_services/config.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UbicacionService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Actualiza la ubicación del profesional autenticado
   static Future<void> actualizarUbicacion(

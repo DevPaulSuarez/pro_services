@@ -64,7 +64,7 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
       );
     }
   }
@@ -403,7 +403,14 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
                           ],
                         ),
                       )
-                    : ListView.separated(
+                    : RefreshIndicator(
+                        onRefresh: () async {
+                          setState(() {
+                            _future = ProfesionalService.getPorCategoria(widget.categoria.id);
+                          });
+                          await _future;
+                        },
+                        child: ListView.separated(
                         padding:
                             const EdgeInsets.fromLTRB(16, 8, 16, 16),
                         itemCount: profesionales.length,
@@ -420,6 +427,7 @@ class _ProfesionalesScreenState extends State<ProfesionalesScreen> {
                             onToggleFavorito: () => _toggleFavorito(profesionales[index].id),
                           );
                         },
+                      ),
                       ),
               ),
             ],
@@ -542,8 +550,12 @@ class _ProfesionalCard extends StatelessWidget {
           Row(children: [
             Icon(Icons.location_on_rounded, size: 14, color: catColor),
             const SizedBox(width: 4),
-            Text(profesional.ubicacion,
-                style: TextStyle(fontSize: 12, color: textSecondary)),
+            Expanded(
+              child: Text(profesional.ubicacion,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: textSecondary)),
+            ),
           ]),
           const SizedBox(height: 4),
           Row(children: [
@@ -572,8 +584,12 @@ class _ProfesionalCard extends StatelessWidget {
           Row(children: [
             Icon(Icons.schedule_rounded, size: 14, color: catColor),
             const SizedBox(width: 4),
-            Text(profesional.horarioDisponibilidad,
-                style: TextStyle(fontSize: 12, color: textSecondary)),
+            Expanded(
+              child: Text(profesional.horarioDisponibilidad,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: textSecondary)),
+            ),
           ]),
           const SizedBox(height: 10),
           Text('Habilidades',

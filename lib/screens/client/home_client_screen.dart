@@ -19,6 +19,7 @@ import 'package:pro_services/screens/client/mis_servicios_recurrentes_screen.dar
 // Mapeo de clave de icono (viene del API) → IconData
 IconData _resolveIcon(String key) {
   const map = <String, IconData>{
+    // originales
     'bolt': Icons.bolt_rounded,
     'water_drop': Icons.water_drop_rounded,
     'handyman': Icons.handyman_rounded,
@@ -29,6 +30,16 @@ IconData _resolveIcon(String key) {
     'home_repair_service': Icons.home_repair_service_rounded,
     'ac_unit': Icons.ac_unit_rounded,
     'security': Icons.security_rounded,
+    // claves del API
+    'electrical_services': Icons.electrical_services_rounded,
+    'plumbing': Icons.plumbing_rounded,
+    'carpenter': Icons.handyman_rounded,
+    'lock': Icons.lock_rounded,
+    'construction': Icons.construction_rounded,
+    'grass': Icons.grass_rounded,
+    'computer': Icons.computer_rounded,
+    'gas_meter': Icons.gas_meter_rounded,
+    'code': Icons.code_rounded,
   };
   return map[key] ?? Icons.work_outline_rounded;
 }
@@ -380,7 +391,9 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
                   );
                 }
 
-                final tipos = snapshot.data!;
+                final tipos = snapshot.data!
+                    .where((t) => t.profesionalesRegistrados > 0)
+                    .toList();
 
                 return GridView.builder(
                   shrinkWrap: true,

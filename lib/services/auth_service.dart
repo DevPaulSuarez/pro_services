@@ -1,8 +1,9 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Iniciar sesión. [rol]: 'cliente' | 'profesional'
   static Future<({String token, String rol, String nombre})> login(
@@ -15,7 +16,7 @@ class AuthService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'correo': correo, 'contrasena': contrasena, 'rol': rol}),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final data = jsonDecode(res.body) as Map<String, dynamic>;
     final usuario = data['usuario'] as Map<String, dynamic>;
     return (
@@ -43,7 +44,7 @@ class AuthService {
         'rol': rol,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final data = jsonDecode(res.body) as Map<String, dynamic>;
     final usuario = data['usuario'] as Map<String, dynamic>;
     return (
@@ -62,19 +63,13 @@ class AuthService {
       Uri.parse(endpoint),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

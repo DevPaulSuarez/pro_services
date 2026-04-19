@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/mensaje.dart';
 
 class MensajeService {
-  static const String _base = 'http://localhost:5099';
+  static const String _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -21,7 +22,7 @@ class MensajeService {
       Uri.parse('$_base/api/proyecto/$proyectoId/mensaje'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((j) => Mensaje.fromJson(j as Map<String, dynamic>)).toList();
   }
@@ -32,7 +33,7 @@ class MensajeService {
       headers: _headers(token),
       body: jsonEncode({'mensaje': mensaje}),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     // El backend devuelve { id: N } al crear; necesitamos recargar
     return Mensaje(
       id: (jsonDecode(res.body)['id'] as int?) ?? 0,

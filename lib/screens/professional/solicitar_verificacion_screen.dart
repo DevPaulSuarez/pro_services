@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_services/config.dart';
 import 'package:pro_services/main.dart';
 
 class SolicitarVerificacionScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SolicitarVerificacionScreenState
     try {
       final res = await http.post(
         Uri.parse(
-            'http://localhost:5099/profesionales/me/solicitar-verificacion'),
+            '${AppConfig.apiBase}/profesionales/me/solicitar-verificacion'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${widget.token}',

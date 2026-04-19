@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/solicitud_abierta.dart';
 
 class SolicitudAbiertaService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   /// Publica una nueva solicitud abierta (cliente busca profesional).
   static Future<void> crear(
@@ -30,7 +31,7 @@ class SolicitudAbiertaService {
       headers: _headers(token),
       body: jsonEncode(body),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Solicitudes abiertas publicadas por el cliente autenticado.
@@ -39,7 +40,7 @@ class SolicitudAbiertaService {
       Uri.parse('$_base/solicitudes-abiertas/mis'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => SolicitudAbierta.fromJson(e as Map<String, dynamic>))
@@ -52,7 +53,7 @@ class SolicitudAbiertaService {
       Uri.parse('$_base/solicitudes-abiertas/disponibles'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => SolicitudAbierta.fromJson(e as Map<String, dynamic>))
@@ -66,19 +67,13 @@ class SolicitudAbiertaService {
       headers: _headers(token),
       body: jsonEncode({}),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

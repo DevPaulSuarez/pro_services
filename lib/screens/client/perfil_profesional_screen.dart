@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_services/config.dart';
 import 'package:pro_services/main.dart';
 import 'package:pro_services/models/foto_proyecto.dart';
 import 'package:pro_services/models/profesional.dart';
@@ -44,7 +45,7 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
     try {
       final res = await http.get(
         Uri.parse(
-          'http://localhost:5099/profesionales/${widget.profesional.id}/fotos-publicas',
+          '${AppConfig.apiBase}/profesionales/${widget.profesional.id}/fotos-publicas',
         ),
       );
       if (res.statusCode != 200) return [];
@@ -573,7 +574,7 @@ class _PerfilProfesionalScreenState extends State<PerfilProfesionalScreen> {
                           (f) => ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              'http://localhost:5099${f.url}',
+                              '${AppConfig.apiBase}${f.url}',
                               fit: BoxFit.cover,
                               errorBuilder: (_, _, _) => Container(
                                 color: isDark
@@ -970,7 +971,14 @@ class _InfoRow extends StatelessWidget {
       children: [
         Icon(icon, size: 16, color: iconColor),
         const SizedBox(width: 8),
-        Text(text, style: TextStyle(fontSize: 13, color: textSecondary)),
+        Expanded(
+          child: Text(
+            text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 13, color: textSecondary),
+          ),
+        ),
       ],
     );
   }

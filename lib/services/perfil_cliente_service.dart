@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/perfil_cliente_publico.dart';
 
 class PerfilClienteService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   static Future<PerfilClientePublico> getPerfil(
       String token, int idCliente) async {
@@ -11,7 +12,7 @@ class PerfilClienteService {
       Uri.parse('$_base/clientes/$idCliente/perfil-publico'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return PerfilClientePublico.fromJson(
         jsonDecode(res.body) as Map<String, dynamic>);
   }

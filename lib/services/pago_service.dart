@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/pago.dart';
 
 class PagoService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ class PagoService {
         'tokenCulqi': tokenCulqi,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return Pago.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
@@ -43,7 +44,7 @@ class PagoService {
       Uri.parse('$_base/pagos/$idPago/liberar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// POST /pagos/{id}/reembolsar — reembolsa el pago al cliente.
@@ -52,7 +53,7 @@ class PagoService {
       Uri.parse('$_base/pagos/$idPago/reembolsar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// GET /pagos/mis — lista los pagos realizados por el cliente autenticado.
@@ -61,7 +62,7 @@ class PagoService {
       Uri.parse('$_base/pagos/mis'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List<dynamic>;
     return list
         .map((e) => Pago.fromJson(e as Map<String, dynamic>))
@@ -74,7 +75,7 @@ class PagoService {
       Uri.parse('$_base/pagos/mis-cobros'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List<dynamic>;
     return list
         .map((e) => Pago.fromJson(e as Map<String, dynamic>))

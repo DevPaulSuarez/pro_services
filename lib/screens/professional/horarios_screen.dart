@@ -248,7 +248,7 @@ class _HorariosScreenState extends State<HorariosScreen> {
                                   ScaffoldMessenger.of(sheetCtx)
                                       .showSnackBar(
                                     SnackBar(
-                                      content: Text('Error: $e'),
+                                      content: Text(e.toString().replaceFirst('Exception: ', '')),
                                       backgroundColor:
                                           const Color(0xFFEF4444),
                                     ),
@@ -374,7 +374,7 @@ class _HorariosScreenState extends State<HorariosScreen> {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error: $e'),
+                          content: Text(e.toString().replaceFirst('Exception: ', '')),
                           backgroundColor: const Color(0xFFEF4444),
                         ),
                       );

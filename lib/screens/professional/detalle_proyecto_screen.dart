@@ -851,7 +851,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                           } catch (e) {
                             if (!mounted) return;
                             messenger.showSnackBar(
-                              SnackBar(content: Text('Error: $e')),
+                              SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
                             );
                           }
                         },
@@ -911,7 +911,7 @@ class _DetalleProyectoScreenState extends State<DetalleProyectoScreen> {
                     } catch (e) {
                       if (!mounted) return;
                       messenger.showSnackBar(
-                        SnackBar(content: Text('Error: $e')),
+                        SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
                       );
                     }
                   },

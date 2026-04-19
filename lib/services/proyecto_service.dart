@@ -1,3 +1,4 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/proyecto.dart';
@@ -5,7 +6,7 @@ import 'package:pro_services/models/nota.dart';
 import 'package:pro_services/models/foto_proyecto.dart';
 
 class ProyectoService {
-  static const _base = 'http://localhost:5099';
+  static const _base = AppConfig.apiBase;
 
   // ── Proyectos ─────────────────────────────────────────────────────────────
 
@@ -16,7 +17,7 @@ class ProyectoService {
     final uri = Uri.parse('$_base/proyectos')
         .replace(queryParameters: estado != null ? {'estado': estado} : null);
     final res = await http.get(uri, headers: _headers(token));
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((e) => Proyecto.fromJson(e as Map<String, dynamic>)).toList();
   }
@@ -27,7 +28,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$id'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return Proyecto.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
@@ -37,7 +38,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$id/aceptar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Rechazar una solicitud.
@@ -46,7 +47,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$id/rechazar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Marcar como completado.
@@ -55,7 +56,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$id/completar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   /// Re-contratar al mismo profesional (crea una nueva solicitud).
@@ -64,7 +65,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$id/re-contratar'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   // ── Notas ─────────────────────────────────────────────────────────────────
@@ -74,7 +75,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$proyectoId/notas'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((e) => Nota.fromJson(e as Map<String, dynamic>)).toList();
   }
@@ -86,7 +87,7 @@ class ProyectoService {
       headers: _headers(token),
       body: jsonEncode({'texto': texto}),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return Nota.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
@@ -96,7 +97,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$proyectoId/notas/$notaId'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   // ── Fotos ─────────────────────────────────────────────────────────────────
@@ -107,7 +108,7 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$proyectoId/fotos'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list
         .map((e) => FotoProyecto.fromJson(e as Map<String, dynamic>))
@@ -126,7 +127,7 @@ class ProyectoService {
           filename: nombre));
     final streamed = await request.send();
     final res = await http.Response.fromStream(streamed);
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return FotoProyecto.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
   }
 
@@ -136,19 +137,13 @@ class ProyectoService {
       Uri.parse('$_base/proyectos/$proyectoId/fotos/$fotoId'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  static void _checkStatus(http.Response res) {
-    if (res.statusCode < 200 || res.statusCode >= 300) {
-      throw Exception('Error ${res.statusCode}: ${res.body}');
-    }
-  }
 }

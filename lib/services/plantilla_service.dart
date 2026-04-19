@@ -1,9 +1,10 @@
+import 'package:pro_services/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pro_services/models/plantilla_cotizacion.dart';
 
 class PlantillaService {
-  static const String _base = 'http://localhost:5099';
+  static const String _base = AppConfig.apiBase;
 
   static Map<String, String> _headers(String token) => {
         'Content-Type': 'application/json',
@@ -21,7 +22,7 @@ class PlantillaService {
       Uri.parse('$_base/api/PlantillaCotizacion/me'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     final list = jsonDecode(res.body) as List;
     return list.map((j) => PlantillaCotizacion.fromJson(j as Map<String, dynamic>)).toList();
   }
@@ -45,7 +46,7 @@ class PlantillaService {
         'observaciones': ?observaciones,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
     return (jsonDecode(res.body)['id'] as int?) ?? 0;
   }
 
@@ -70,7 +71,7 @@ class PlantillaService {
         'observaciones': ?observaciones,
       }),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 
   static Future<void> eliminar(String token, int id) async {
@@ -78,6 +79,6 @@ class PlantillaService {
       Uri.parse('$_base/api/PlantillaCotizacion/me/$id'),
       headers: _headers(token),
     );
-    _checkStatus(res);
+    AppConfig.checkStatus(res);
   }
 }
